@@ -1,0 +1,220 @@
+MariaDB [cafe]> create table head(name varchar(20) unique  not null PRIMARY KEY, address varchar(40) not null, contact varchar(20) not null) ;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [cafe]> create table branch(code char(8) unique not null PRIMARY KEY, name varchar(40) not null, address varchar(40) not null, brand_name varchar(20), FOREIGN KEY (brand_name) REFERENCES head(name));
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [cafe]> CREATE TABLE manager ( b_code char(8) , b_name varchar(40), name varchar(20), code char(8) unique not null  PRIMARY KEY, birth_year int not null, birth_month int , birth_day int ,  age int , FOREIGN KEY (b_code) REFERENCES branch (code),FOREIGN KEY (b_name) REFERENCES head(name) );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [cafe]> create table branch_contact(branch_code char(8), contact varchar(20) not null , FOREIGN KEY (branch_code) REFERENCES branch(code));
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [cafe]> create table manager_contact(manager_code char(8), contact varchar(20) not null , FOREIGN KEY (manager_code) REFERENCES manager(code));
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [cafe]> create table staff(code char(8) unique not null PRIMARY KEY, birth_year int not null,birth_month int , birth_day int ,start date, name varchar(20) not null, sex char(1), contact varchar(20));  
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [cafe]> create table menu(code char(4) unique not null PRIMARY KEY, name varchar(20) unique not null, price int not null, quan int, category varchar(20) not null);
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [cafe]> insert into head values('공차' , '서울 종로구 종로47','02-779-7758');
+Query OK, 1 row affected (0.013 sec)
+
+MariaDB [cafe]> insert into head values('할리스커피' , '서울 종로구 율곡로','02-223-8284');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch values('GONG-001','공차 동국대점','공차 동국대후문','공차');
+Query OK, 1 row affected (0.008 sec)
+
+MariaDB [cafe]> insert into branch values('GONG-002','공차 서울대입구점 ','공차 서울대입구역 앞','공차');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into branch values('HALL-001','할리스 충무로점','할리스 충무로역 앞','할리스커피');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch values('HALL-001','할리스 서울대입구점','할리스 서울대입구역 앞','할리스커피');
+ERROR 1062 (23000): Duplicate entry 'HALL-001' for key 'PRIMARY'
+MariaDB [cafe]> insert into branch values('HALL-002','할리스 서울대입구점','할리스 서울대입구역 앞','할리스커피');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('GONG-001','010-0000-0001');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [cafe]> insert into branch_contact values('GONG-001','02-000-0001');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('GONG-002','010-2000-0002');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('GONG-002','02-200-0002');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('HALL-001','010-5550-0101');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('HALL-001','02-555-0101');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into branch_contact values('HALL-002','010-1355-0601'); 
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into branch_contact values('HALL-002','02-155-0601');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into manager values('GONG-001', '공차', '공일매','GONG0011',1980,7,5,41);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [cafe]> insert into manager values('GONG-002', '공차', '이공매','GONG0021',1985,2,15,36);
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into manager values('HALL-001', '할리스커피', '할일매','HALL0011',1984,11,15,37);
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into manager values('HALL-002', '할리스커피', '이할매','HALL0021',1991,11,01,30);
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into manager_contact values('GONG0011','01023451811');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [cafe]> insert into manager_contact values('GONG0021','01084812031');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into manager_contact values('HALL0021','01094657542');
+Query OK, 1 row affected (0.001 sec)
+MariaDB [cafe]> insert into staff values('GONG01-1',1997,1,2,'2019-03-01','공차돌','남','010-3030-0101');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [cafe]> insert into staff values('GONG02-1',1995,7,12,'2019-07-01','윤공차','여','010-2211-0251');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into staff values('HALL01-1',1993,3,12,'2019-09-01','할리원','여','010-2123-9834');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into staff values('HALL02-1',1999,6,21,'2019-11-01','할둘리','남','010-2123-9834');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> update staff set contact='010-2930-2934' where staff.name=‘할둘리’;
+
+MariaDB [cafe]> create table menu(code char(4) unique not null PRIMARY KEY, name varchar(20) not null, price int not null, quan int, category varchar(20) not null, brand_name varchar(20), FOREIGN KEY (brand_name) REFERENCES head(name));
+ , 0 rows affected (0.012 sec)
+
+MariaDB [cafe]> insert into menu values('H001', '아메리카노', 4100, 10000, '음료', '할리스커피');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into menu values('G001', '아메리카노', 4000, 1000, '음료', '공차');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into menu values('G100', '레몬요구르트', 5500, 40, '음료', '공차');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into menu values('H002', '콜드브루', 4500, 1000, '음료', '할리스커피');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into menu values('G201', '블랙티',3500, 5000, '음료', '공차');;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into menu values('G111', '블랙 밀크티',4200, 100000, '음료', '공차');;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into menu values('H392', '커피할리치노', 5200, 500, '음료', '할리스커피');;
+Query OK, 1 row affected (0.001 sec)
+MariaDB [cafe]> insert into menu values('H902', '뉴욕치즈케이크', 5000, 500,  '케이크', '할리스커피');
+
+create table customer(num char(3) unique not null PRIMARY KEY, take varchar(10) not null);
+
+MariaDB [cafe]> insert into customer values('A01','OUT');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> insert into customer values('A02','OUT');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into customer values('B01','IN');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into customer values('B02','IN');
+Query OK, 1 row affected (0.001 sec)
+create table menuorder(cus_num char(3) unique not null, payment int, products int, m_code char(4) not null, FOREIGN KEY (cus_num) REFERENCES customer(num), FOREIGN KEY (m_code) REFERENCES menu(code));
+
+MariaDB [cafe]> insert into menuorder values('A01',0,0,'G001');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [cafe]> insert into menuorder values('A02',0,1,'G100');
+Query OK, 1 row affected (0.001 sec)
+MariaDB [cafe]> insert into menuorder values('B01',0,3,'H001');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into menuorder values('B02',0,1,'H902');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [cafe]> update menuorder inner join menu on
+    -> menuorder.m_code=menu.code set menuorder.payment=(menuorder.products*menu.price);
+
+update menu inner join menuorder on menuorder.m_code=menu.code set menu.quan=menu.quan-menuorder.products;
+MariaDB [cafe]> ALTER TABLE staff ADD salary int not null;
+Query OK, 0 rows affected (0.027 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [cafe]> update staff set salary=11000 where staff.code='GONG01-1'
+    -> ;
+Query OK, 1 row affected (0.006 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set salary=10000 where staff.code='GONG02-1';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set salary=9000 where staff.code='HALL01-1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set salary=8500 where staff.code='HALL02-1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+MariaDB [cafe]> ALTER TABLE staff ADD work int not null;
+Query OK, 0 rows affected (0.017 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [cafe]> update staff set work=54 where staff.code='HALL02-1';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set work=81 where staff.code='HALL01-1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set work=120 where staff.code='GONG01-1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> update staff set work=110 where staff.code='GONG02-1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [cafe]> create table care(ma_code char(8) not null , st_code char(8) unique not null , toss int not null, FOREIGN KEY (ma_code) REFERENCES manager(code) , FOREIGN KEY (st_code) REFERENCES staff(code));
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [cafe]> insert into care values('GONG0011','GONG01-1',0);
+Query OK, 1 row affected (0.001 sec)
+MariaDB [cafe]> insert into care values('GONG0021','GONG02-1',0)
+    -> ;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into care values('HALL0011','HALL01-1',0);
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> insert into care values('HALL0021','HALL02-1',0);
+Query OK, 1 row affected (0.001 sec)
+
+update care inner join staff on care.st_code=staff.code set care.toss = (staff.salary * staff.work);
+
+MariaDB [cafe]> insert into care values('HALL0021','HALL02-2',0);
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [cafe]> update care inner join staff on care.st_code=staff.code set care.toss = (staff.salary * staff.work);
+
+select manager.b_code,manager.name,manager.code from manager inner join branch on branch.code=manager.b_code;
+
+select branch.brand_name, branch.name, branch.code from branch inner join head on head.name=branch.brand_name;
+
